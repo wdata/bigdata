@@ -1,0 +1,589 @@
+html,body{
+	width: 100%;
+	height: 100%;
+}
+
+body {
+    font-family:'Microsoft YaHei',Arial,Helvetica,sans-serif,'宋体';
+    padding:0px;
+    font-size:14px;
+    color:#6b7489;
+    /*margin:0 40px;*/
+    background-color: #e1e5ed;
+    min-width: 900px;
+}
+.breadcrumb{
+    background: none;
+}
+.breadcrumb > li{
+    font-size: 22px;
+    color: #6b7489;
+}
+
+.rightAlign{text-align: right;}
+.form-tr-height{height: 30px;}
+
+/*濡傛灉鐢ㄦ祻瑙堝櫒榛樿鐨勫瓧浣撳ぇ灏忥紝閭adio鍜屾枃瀛楁槸瀵归綈鐨勶紝褰撹缃瓧浣撳ぇ灏忎负12锛屽氨鏃犳硶瀵归綈浜�*/
+.radioVerticalAlign{vertical-align:2px;}
+
+.saveButton{
+	height: 26px;
+    width: 58px;
+    margin-left: 10px;
+}
+.seleButton{
+	height: 26px;
+    width: 48px;
+    margin-left: 10px;
+    display: table-cell;
+}
+
+/*celerityEntrance*/
+.Entrance{
+	margin-bottom: 20px;
+}
+.Entrance h3{
+	color:#0066CC;
+}
+.Entrance .listed{
+	margin-left: 20px;
+	border-bottom: 1px dashed #000;
+	padding: 20px 10px;
+}
+.Entrance .listed p{
+	display: table-cell;
+    width: 250px;
+    margin-left: 20px;
+    font-size: 15px;
+    line-height: 28px;
+}
+
+.loginBody{
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    /*background:url(../image/bg.png) no-repeat;*/
+    background-color: #1B85D7;
+    -moz-background-size:cover;
+    -webkit-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
+}
+.searchSpan{
+	margin-left: 18px
+}
+.searchButton1{
+    width: 52px;
+    height: 28px;
+    background-color: #4abd7b;
+    color: #fff;
+    font-size: 16px;
+    border: 1px solid;
+    border-radius: 3px;
+    vertical-align: bottom;
+}
+.errorRed{
+    position: absolute;
+    color: red;
+}
+.searchPanel{
+    min-width:900px;
+}
+
+/*easui样式修改*/
+.datagrid-toolbar{
+    background-color: #F1F6F7;
+    padding: 1px 2px 10px;
+}
+
+.panel .datagrid{
+    margin: 6px 20px 0px 20px;
+    background-color: #F1F6F7; //追加背景色，不显示滚动条时出现
+}
+.datagrid > .panel-body{
+    /*border: 0px;*/
+}
+.datagrid .datagrid-header-inner {
+    background-color: #E6EAF1;
+}
+.supplierShow{
+    display:none;
+}
+/*头部提示*/
+.hint{
+    padding: 8px 0;
+    font-size: 12px;
+    text-indent: 1em;
+    color:#999;
+    /*border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;*/
+}
+.clear{
+    clear: both;
+}
+h3{
+    /*padding: 10px;*/
+    font-size: 22px;
+    padding: 18px 0;
+    text-indent: 50px;
+    color: #6b7489;
+    background: #f2f4f7;
+    margin: 0;
+}
+.query{
+    margin: 15px 0 20px;
+    padding: 0 15px;
+    overflow: hidden;
+}
+/*.query > div{
+    margin-top: 10px;
+}*/
+.query > .query_date{
+    float: left;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 20px;
+    text-align: center;
+    height: 30px;
+}
+.query > .query_condition{
+    float: left;
+    margin-left: 15px;
+    margin-right: 120px;
+    margin-top: 6px;
+    height: 30px;
+}
+.query > .query_condition > i{
+    font-style: normal;
+}
+.query > .query_condition > span{
+    background: #e6e9f1;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid #99a3bf;
+    color: #6b7489;
+    font-size: 14px;
+    cursor: pointer;
+}
+.query > .query_condition > span:hover{
+    color: #e6e9f1;
+    background: #6b7489;
+}
+.query > .query_condition > span > input{
+    display: none;
+}
+.query > .query_time{
+    float: left;
+    margin-left: 15px;
+}
+.query > .query_time > select{
+    width: 153px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    height: 30px;
+}
+.profile_head{
+    text-align: center; 
+    color: #596380;
+    font-size: 18px;
+    margin-top: 21px;
+}
+.overall{
+    position: relative;
+}
+.overall .dividing-line{
+    position:absolute;
+    top:-24px;
+    width:1px;
+    height:181px;
+    background-color:#ccc;
+}
+.overall .left{
+    left: 28.1%;
+}
+.overall .right{
+    right: 28.1%;
+}
+
+.database{
+    margin-top: 20px;
+    display:flex;
+    justify-content: space-around;
+}
+.database > div{
+    border: 1px solid #ccc;
+    background: #fff;
+    margin-right: 10px;
+    padding-bottom: 10px;
+    display: inline-block;
+    width: 163px;
+    height: 141px;
+    /*overflow: hidden;*/
+    position: relative;
+}
+.manageDatabase > div:nth-child(3),
+.manageDatabase > div:nth-child(8){
+    margin-right:30px;
+}
+.manageDatabase-overall .left{
+    left: 27.4%;
+}
+.manageDatabase-overall .right{
+    right: 27.3%;
+}
+.database > div:nth-child(1){
+    margin-left: 50px;
+}
+.database > div:last-child{
+    margin-right: 50px;
+}
+.database > div > p{
+    margin-top: 10px;
+    margin-bottom: 16px;
+}
+.database > div > .reminder{
+    position: absolute;
+    top: 37px;
+    right: -115px;
+    left: 148px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 0 14px 5px rgba(101,28,77,.1);
+    padding: 0 10px;
+    z-index: 9999;
+    width: 120px;
+    display: none;
+}
+.database > div:last-child > .reminder{
+    right: 25px;
+    left: 0;
+}
+.database > div > p > .list_name{
+    display: inline-block;
+    width: 100%;
+    float: left;
+    font-size: 14px;
+    line-height: 25px;
+    text-align: center;
+    color: #6b7489;
+}
+.database > div > p > .detail{
+    position: absolute;
+    top: 10px;
+    right: 3px;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    background: url(../image/detail.png) no-repeat center;
+}
+.database > div > h5{
+    font-size: 22px;
+    text-align: center;
+    clear: both;
+    color: #4f596d;
+}
+.manageDatabase > div > h5{
+    font-size: 24px;
+}
+.database > div > .database_cycle{
+    font-size: 12px;
+    color: #bbb;
+    display: flex;
+    /*text-align: center;*/
+}
+.database > div > .database_cycle > span:nth-child(1){
+    display: inline-block;
+    width: 35%;
+    text-align: right;
+}
+.database > div > .database_cycle > span:nth-child(2){
+    display: inline-block;
+    width: 50%;
+    text-align: left;
+}
+.query > .query_condition > .cliStyle{
+    color: #e6e9f1;
+    background: #6b7489;
+}
+
+/*交易分析样式*/
+.tradebase{
+    border-bottom: 1px solid #ccc;
+    width: 80%;
+    height: 114px;
+}
+.tradebase > div{
+    width: 100px;
+    text-align: center;
+    float: left;
+}
+.tradebase > div > p{
+    font-size: 14px;
+    margin-top: 10px;
+}
+/*.tradebase > div > h6{
+    font-size: 18px;
+}*/
+.tradebase > div > .gradient{
+    padding-bottom: 10px;
+}
+.tradebase > div > .gradient > span:nth-child(2){
+    color: #518502;
+}
+.tradebase > div > .gradient > span{
+    display: block;
+    font-size: 12px;
+    color: #999;
+}
+.percent{
+    position: absolute;
+    right: 35px;
+    top: 0;
+    background: url(../image/deal.png) no-repeat;
+    height: 456px;
+    width: 637px;
+}
+.order{
+    position: absolute;
+    top: 115px;
+    right: 10px
+}
+.pay{
+    position: absolute;
+    top: 260px;
+    right: 35px;
+}
+.shop{
+    position: absolute;
+    top: 345px;
+    right: 125px;
+}
+.deal_form{
+    margin-top: 70px;
+    border-top: 1px solid #bbb
+}
+/*流量分析*/
+.window .window-header{
+    height: 24px;
+}
+.window .window-header > .panel-title{
+    display: none;
+}
+.window .window-header > .panel-tool{
+    height: 20px;
+}
+.window .window-header > .panel-tool > a{
+    display: none;
+}
+.window .window-header > .panel-tool > a.panel-tool-close{
+    display: block;
+}
+#data_list > div:first-child{
+    margin-left: 0;
+}
+#data_list > div:last-child{
+    margin-right: 0;
+}
+#data_list > div:nth-child(3){
+    margin-left: 30px;
+}
+#data_list > div{
+    width: 150px;
+}
+#data_list > div:nth-child(6){
+    margin-left: 30px;
+}
+.dataList > thead{
+    background: #e2e5ee;
+    height: 38px;
+    line-height: 38px;
+}
+.dataList > thead > tr > th,.dataList > tbody > tr > td{
+    text-align: center;
+    border: 1px solid #ccc;
+}
+.dataList > tbody > tr {
+    height: 38px;
+}
+.paging{
+    padding-left: 0;
+    margin: 0;
+}
+.paging > li{
+    list-style:none;
+    float: left;
+    padding: 0 10px;
+    height: 30px;
+    color: #6b7489;
+    line-height: 30px;
+    font-size: 14px;
+    border: 1px solid #e6e9f1;
+    background: #f6f7f7;
+}
+.paging > li.pages{
+    background: #41c1d5;
+    color: #fff;
+}
+.total_page {
+    display: inline-block;
+    padding: 0 10px;
+    line-height: 30px;
+    color: #6b7489;
+    font-size: 14px;
+}
+.listData{
+    position:relative;
+}
+.features{
+    position: absolute;
+    top: 20px;
+    right: 0;
+    display: flex;
+    align-items: center;
+}
+.query_excel{
+    display: block;
+    float: right;
+    color: #4abd7b;
+    font-size: 14px;
+    line-height: 31px;
+    margin-right: 23px;
+    margin-left:22px;
+}
+.query_excel:hover{
+    text-decoration:none;
+    color: #339C60;
+}
+#user_base > div{
+    width: 150px;
+}
+#user_base > div:first-child{
+    margin-left: 0;
+}
+#user_base > div:last-child{
+    margin-right: 0;
+}
+.user_base .right{
+    right: 28.3%;
+}
+.diagram{
+    width: 46%;
+    margin: 20px 2%;
+    height: 455px;
+    float: left;
+    border: 1px solid #ccc;
+}
+.diagram > p{
+    font-size: 18px;
+    color: #6b7489;
+    text-indent: 40px;
+    margin-top: 25px;
+}
+.none{
+    display: none !important;
+}
+.commodity_survey > div{
+    width: 155px;
+}
+.commodity_survey > div p{
+    display: flex;
+    justify-content: center;
+    margin-bottom:0;
+}
+.commodity_survey > div:nth-child(3) .list_name
+,.commodity_survey > div:nth-child(4) .list_name
+,.commodity_survey > div:nth-child(6) .list_name{
+    width: 55%;
+    line-height: inherit;
+}
+.commodity_survey > div:nth-child(3) h5
+,.commodity_survey > div:nth-child(4) h5
+,.commodity_survey > div:nth-child(6) h5{
+    margin: 5px 0;
+}
+
+.commodity_overall .left{
+    left: 15.8%;
+}
+.commodity_overall .right{
+    right: 35.5%;
+}
+.commodity_overall .database>div:first-child{
+    margin-left:0;
+}
+.commodity_overall .database>div:last-child{
+    margin-left:0;
+}
+/*经营概况*/
+.operating div:nth-child(1){
+    padding-right: 5.5%;
+}
+.operating div:nth-child(3){
+    padding-left: 5%;
+}
+
+/*商品分析*/
+.analysis > div:nth-child(1){
+    padding-right: 17%;
+}
+.analysis > div:nth-child(2){
+    padding-right: 20%;
+}
+.analysis > div:nth-child(3){
+    padding-right: 7.5%;
+}
+/*用户*/
+.userAnalysis > div:nth-child(2){
+    margin-left: 11%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.manageDatabase > div{
+    width:145px;
+}
+.manageDatabase > div:first-child{
+    margin-left: 10px;
+}
+.manageDatabase > div:last-child{
+    margin-right: 10px;
+}
+/*  商品分析--自定义指标按钮  */
+.h4Style {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+
+#winNorm, #panelItem, #timeDec_spanOne,
+#panel_Activity, #panel_UserPay, #panel_AfterSales, #panel_RechargeType, #panel_UserAttribute, #panel_RecentBehavior {
+    display: none;
+}
+
+/*  经营概况上升和下降的图片  */
+.uoDownDate{
+    display: flex!important;
+    width: 100%;
+    height: 100%;
+    justify-content: left;
+    align-items: center;
+    font-size:12px;
+}
+.uoDownDate img{
+    width: 11px;
+    display: inline-block;
+}
