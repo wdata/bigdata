@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Expires" content="-1"/>
+    <title>数据统计分析首页</title>
+    <!--<link href="image/title_icon.ico" rel="shortcut icon"/>-->
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <!--<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">-->
+    <link rel="stylesheet" type="text/css" href="css/global.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="js/global.js"></script>
+    <script type="text/javascript" src="js/home.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            initMenu();
+            $(window).resize(function () {
+                $('#cc').layout('resize');
+            });
+            // 禁用拖动
+            $('body').layout('panel', 'north').panel('panel').resizable('disable');
+        });
+    </script>
+</head>
+
+<body id="cc" class="easyui-layout"
+      style="height: 100%;width: 100%;font-family:'Microsoft YaHei',Arial,Helvetica,sans-serif,'宋体';">
+<div id="homeNorth" data-options="region:'north',split:false,collapsible:false" style="height:60px;width:100%;">
+
+    <div id="homeTop">
+        <div class="north_logo">
+            <span>数据统计分析平台</span>
+        </div>
+
+        <div class="north_mpenl">
+            <!--给予运营商管理用 角色使用-->
+            <div style="display: inline-block;">
+                <!--<button onclick="switchSupplier();" class="home_supplierButton supplierAdminUse" >切换运营商</button>-->
+                <span class="supplierAdminUse">
+                    <span style="font-size: 12px;color: #ffffff;line-height: 2;">切换运营商：</span>
+                    <select id="storeSupplier" onchange="switchSupplier(this)"></select></span>
+                <a style="margin-left: 20px;" href="javascript:void(0)" id="lblUserName" class="easyui-menubutton"
+                   data-options="menu:'#mm',hasDownArrow:false"></a>
+                <div id="mm" style="width:50px;">
+                    <!--  <div class="menu-sep"></div>    -->
+                    <div onclick="secureExit();">退出</div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="north_topNavbar">
+            <ul class="top_avbar"></ul>
+        </div> -->
+    </div>
+</div>
+<div id="homeWest" data-options="region:'west',split:false" style="width:145px;">
+    <div class="homeWest_children">
+        <ul class="left_avbar"></ul>
+    </div>
+</div>
+<div data-options="region:'center'" style="overflow:visible;">
+    <iframe name="_rightPanel" frameborder="0" src="" style="width: 100%; height: 100%;"></iframe>
+</div>
+</body>
+</html>

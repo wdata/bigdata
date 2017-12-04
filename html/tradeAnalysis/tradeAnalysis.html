@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <title>交易分析</title>
+    <link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/global.css">
+    <style type="text/css">
+        body,html{
+            min-width: 1225px;
+        }
+        #profile .uoDownDate{
+            justify-content: center;
+        }
+    </style>
+    <script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/echarts.common.min.js"></script>
+    <script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js"></script>
+<body style="min-width:1050px;">
+<div class="container-fluid" style="height: 40px;">
+    <div class="row">
+        <div class="span6">
+            <ul class="breadcrumb" style="line-height: 2;margin-bottom: 0">
+                <li>
+                    <span>首页</span>
+                </li>
+                <li>交易分析</li>
+            </ul>
+        </div>
+        <div class="hint"></div>
+        <div class="query">
+            <input type="text" class="query_date" id="stateTime" readonly onfocus="stateTimeInit();"/>
+            <input type="text" class="query_date" id="endTime" readonly onfocus="endTimeInit();"/>
+            <div class="query_condition">
+                <i>快速查看：</i>
+                <span class="cliStyle span1">近1天<input type="hidden" value="1"/></span>
+                <span class="span7">近7天<input type="hidden" value="2"/></span>
+                <span class="span30">近30天<input type="hidden" value="3"/></span>
+            </div>
+            <div class="query_time" id="operators_ID">
+                <label>运营商：</label>
+                <select id="operator">
+                    <!-- <option>1</option>
+                    <option>1</option> -->
+                </select>
+            </div>
+            <div class="query_time">
+                <label>终端：</label>
+                <select id="terminal">
+                   <!--  <option>1</option>
+                    <option>1</option> -->
+                </select>
+            </div> 
+        </div>
+        <!-- <div class="clear"></div> -->
+    </div>
+    <div style="background: #fff">
+        <h3>交易概况</h3>
+        <div style="position: relative">
+            <div id="profile">
+                <!--<div class="tradebase">-->
+                <!--<div class="trandebase-A">-->
+                <!--<p class="tradebase_name"></p>-->
+                <!--<h6 class="tradebase_num"></h6>-->
+                <!--<div class="gradient gradient1">-->
+                <!--<span>较前一天</span>-->
+                <!--<span class="tradebase_per"></span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+            <div class="percent"></div>
+            <div class="order">
+                <span class="order_name"></span>
+                <span class="order_conversion"></span>
+            </div>
+            <div class="pay">
+                <span class="pay_name"></span>
+                <span class="pay_conversion"></span>
+            </div>
+            <div class="shop">
+                <span class="shop_name"></span>
+                <span class="shop_conversion"></span>
+            </div>
+        </div>
+        <div id="tradeAnalysis" style="width: 100%;height:500px; margin: 25px auto;"></div>
+    </div>
+    <div style="background: #fff;margin-top: 45px">
+        <div>
+            <h3>交易构成</h3>
+            <div class="query">
+                <div class="query_time">
+                    <label>时间筛选：</label><input id="analysisMonthStartTime" type="text" class="Wdate" readonly onfocus="monthTime();"/>
+                </div>
+                <div class="query_time" id="deals_operator">
+                    <label>运营商：</label>
+                    <select id="deal_operator">
+                        <!-- <option>1</option>
+                        <option>1</option> -->
+                    </select>
+                </div>
+                <div class="query_time">
+                    <label>终端：</label>
+                    <select id="deal_terminal">
+                        <!-- <option>1</option>
+                        <option>1</option> -->
+                    </select>
+                </div> 
+            </div>
+            <!-- <div class="col-md-12">
+                <p>新老客户构成</p>
+                <span><img src=""/>新客户</span>
+                <span><img src=""/>老客户</span>
+            </div> -->
+        </div>
+        <table class="dataList" style="height: 130px;width: 100%;margin: 30px 0">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>付款金额(元)</th>
+                    <th>较前一月</th>
+                    <th>付款人数</th>
+                    <th>较前一月</th>
+                </tr>
+            </thead>
+            <tbody id="list">
+                <tr>
+                    <td>新客户</td>
+                    <td class="new_money"></td>
+                    <td class="new_sum"></td>
+                    <td class="new_num"></td>
+                    <td class="new_people"></td>
+                </tr>
+                <tr>
+                    <td>老客户</td>
+                    <td class="old_money"></td>
+                    <td class="old_sum"></td>
+                    <td class="old_num"></td>
+                    <td class="old_people"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../js/global.js"></script>
+<script type="text/javascript" src="../../js/html/tradeAnalysis/tradeAnalysis.js"></script>
+</body>
+</html>

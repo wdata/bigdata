@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>商品分析</title>
+    <link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../easyui/themes/default/easyui.css">
+    <!--<link rel="stylesheet" type="text/css" href="../../../easyui/themes/icon.css">-->
+    <link rel="stylesheet" type="text/css" href="../../css/global.css">
+    <script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/echarts.common.min.js"></script>
+    <script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js"></script>
+
+</head>
+
+<body>
+<div class="container-fluid" style="margin-bottom: 30px;">
+    <div class="row">
+        <div class="span6">
+            <ul class="breadcrumb" style="line-height: 2;margin-bottom: 0">
+                <li>
+                    <span>首页</span>
+                </li>
+                <li>商品分析</li>
+            </ul>
+        </div>
+        <div class="hint"></div>
+        <div class="query" style="min-width: 1300px;">
+            <input type="text" class="query_date Wdate" id="stateTime" readonly onfocus="stateTimeInit();"/>
+            <input type="text" class="query_date Wdate" id="endTime" readonly onfocus="endTimeInit();"/>
+            <div class="query_condition">
+                <i>快速查看：</i>
+                <span class="cliStyle span1">近1天<input type="hidden" value="1"/></span>
+                <span class="span7">近7天<input type="hidden" value="2"/></span>
+                <span class="span30">近30天<input type="hidden" value="3"/></span>
+            </div>
+            <div class="query_time" id="operators_ID">
+                <label>运营商：</label>
+                <select id="operator">
+                </select>
+            </div>
+            <div class="query_time">
+                <label>终端：</label>
+                <select id="terminal">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div style="background: #fff;min-width: 1300px;">
+        <h3>商品概况</h3>
+        <div class="row profile_head analysis" id="manage_name">
+        </div>
+        <div class="overall commodity_overall">
+            <div class="dividing-line left hidden"></div>
+            <div class="dividing-line right hidden"></div>
+            <div class="database commodity_survey">
+            </div>
+        </div>
+        <div id="userTrendPanel" style="height: 500px;margin: 30px auto;"></div>
+    </div>
+    <div  class="listData" style="background: #fff;margin-top: 45px">
+        <h3>商品分析</h3>
+        <div class="query_time" style="padding: 15px 0 0 20px;">
+            <label>分类选择：</label>
+            <select id="trade_list"></select>
+        </div>
+        <!-- 按钮组 -->
+        <div class="features">
+            <input type="button" class="btn btn-primary btn-sm" value="自定义指标" onclick="customizeCommodity.showGridColum()"/>
+            <a class="query_excel" href="javascript:tradeExcel()">Excel导出</a>
+        </div>
+
+        <div class="layerOne" style="margin: 10px 20px 0px 20px; height: 450px;">
+            <div id="dataList" ></div>
+        </div>
+    </div>
+    <div  class="listData" style="background: #fff;margin-top: 45px">
+        <h3>品类分析</h3>
+        <!-- 按钮组 -->
+        <div class="features">
+            <input type="button" class="btn btn-primary btn-sm" value="自定义指标" onclick="customizeCategory.showGridColum()"/>
+            <a class="query_excel" href="javascript:categoryExcel()">Excel导出</a>
+        </div>
+        <div class="layerTwo" style="margin: 10px 20px 0px 20px; height: 450px;">
+            <div id="categoryList"></div>
+        </div>
+    </div>
+</div>
+
+<div id="winNorm">
+    <p class="h4Style" style="margin-left: 10px;">自定义指标</p>
+    <div style="margin: 10px 0px 10px 40px;">
+        <a href="#" class="easyui-linkbutton customizeCommodity" onclick="customizeCommodity.columnsCheckedSelectDefult(); return false;">默认</a>
+        <a href="#" class="easyui-linkbutton customizeCategory" onclick="customizeCategory.columnsCheckedSelectDefult(); return false;">默认</a>
+        <a href="#" class="easyui-linkbutton" onclick="customizeCommodity.columnsCheckedSelectTrue(); return false;"
+           style="margin-left: 10px;">全选</a>
+        <a href="#" class="easyui-linkbutton" onclick="customizeCommodity.columnsCheckedSelectNOT(); return false;"
+           style="margin-left: 10px;">反选</a>
+    </div>
+    <table id="columnsDataCheck" style="margin: 0 auto;width: 500px;"></table>
+    <div style="margin-top: 20px;text-align: center; ">
+        <a href="#" class="easyui-linkbutton customizeCommodity" onclick="customizeCommodity.makeGridColum(); return false;">确认</a>
+        <a href="#" class="easyui-linkbutton customizeCategory" onclick="customizeCategory.makeGridColum(); return false;">确认</a>
+        <a href="#" class="easyui-linkbutton" onclick="customizeCommodity.closWinButton(); return false;" style="margin-left: 20px">取消</a>
+    </div>
+</div>
+<!-- <div id="pageTabs" style="height: 96%; margin: 0 auto; ">
+    <div title="商品分析" style="background-color: #F1F6F7">
+        <div id="analysisTB">
+            <!-- 统计商品分析 -->
+            <!-- <div class="searchPanel" style="margin:10px;">
+                <span class="supplierShow">
+                            运营商：
+                            <input id="analysisSupplierSel"/>
+                        </span>
+                <span>
+						平台：
+						<input style="width: 120px;" id="analysisPlatform"/>
+					</span>
+                <span>
+						渠道：
+						<input style="width: 120px;" id="analysisChannel"/>
+					</span>
+            </div>
+            <div class="searchPanel" style="margin: 10px;">
+                <span>
+						周期：
+						<input style="width: 50px;" id="analysisCycle"/>
+					</span>
+                <span id="analysisDayDIV">
+						<input id="analysisDayStartTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'analysisDayEndTime\')}',isShowClear:true,readOnly:true})"/>-
+						<input id="analysisDayEndTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'analysisDayStartTime\')}',isShowClear:true,readOnly:true})"/>
+					</span>
+
+                <span id="analysisWeekDIV" style="display: none;">
+						<input id="analysisSplitMonthStartTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'analysisSplitMonthEndTime\')}',isShowClear:true,readOnly:true,dateFmt:'yyyy-MM'});getMonthWeek(this.value,'state',0,'analysisSplitWeekStartTime');"/>
+						<input id="analysisSplitWeekStartTime"/>-
+						<input id="analysisSplitMonthEndTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'analysisSplitMonthStartTime\')}',isShowClear:true,readOnly:true,dateFmt:'yyyy-MM'});getMonthWeek(this.value,'end',0,'analysisSplitWeekEndTime');"/>
+						<input id="analysisSplitWeekEndTime"/>
+					</span>
+
+                <span id="analysisMonthDIV" style="display: none;">
+						<input id="analysisMonthStartTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'analysisMonthEndTime\')}',isShowClear:true,readOnly:true,dateFmt:'yyyy-MM'})"/>-
+						<input id="analysisMonthEndTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'analysisMonthStartTime\')}',isShowClear:true,readOnly:true,dateFmt:'yyyy-MM'})"/>
+					</span>
+                <span style="margin-left: 10px;">
+						<input type="button" class="btn btn-success btn-xs" onclick="analysisReloadgrid();" value="查询"/>
+					</span>
+            </div>
+
+            <div class="searchPanel" style="margin-left: 10px;">
+                <input type="button" class="btn btn-primary btn-sm" value="自定义指标" onclick="showAnalysisGridColum()"/>
+            </div>
+        </div>
+
+        <div id="analysisData" style=" height: 500px;">
+            <table id="analysisDataList" toolbar="#analysisTB" style="height: 500px;"></table>
+        </div>
+
+        <div id="analysisWinNorm" style="display: none;">
+            <h4 style="margin-left: 10px;">自定义指标</h4>
+            <div style="margin: 10px 0px 10px 40px;">
+                <a href="#" class="easyui-linkbutton" onclick="analysisCheckedSelectDefult();">默认</a>
+                <a href="#" class="easyui-linkbutton" onclick="analysisCheckedSelectTrue();" style="margin-left: 10px;">全选</a>
+                <a href="#" class="easyui-linkbutton" onclick="analysisCheckedSelectNOT();" style="margin-left: 10px;">反选</a>
+            </div>
+            <table id="analysisColumnsDataCheck" style="margin: 0 auto;width: 500px;"></table>
+            <div style="margin-top: 20px;text-align: center; ">
+                <a href="#" class="easyui-linkbutton" onclick="analysisMakeGridColum();">确认</a>
+                <a href="#" class="easyui-linkbutton" onclick="analysisClosWinButton();"
+                   style="margin-left: 20px">取消</a>
+            </div>
+        </div>
+    </div>
+    <div title="商品销售排行" style="background-color: #F1F6F7">
+        <div id="salesRankingTB">
+            <div class="searchPanel" style="margin:10px;">
+                 <span class="supplierShow">
+                                运营商：
+                                <input id="salesRankingSupplierSel"/>
+                            </span>
+                <span>
+						平台：
+						<input style="width: 120px;" id="salesRankingPlatform"/>
+					</span>
+                <span>
+						渠道：
+						<input style="width: 120px;" id="salesRankingChannel"/>
+					</span>
+            </div>
+            <div class="searchPanel" style="margin:10px;">
+                <span>
+						周期：
+						<input style="width: 50px;" id="salesRankingCycle">
+					</span>
+
+                <span id="salesRankingDayDIV">
+						<input id="salesRankingDayStartTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'salesRankingDayEndTime\')}',isShowClear:true,readOnly:true})"/>-
+						<input id="salesRankingDayEndTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'salesRankingDayStartTime\')}',isShowClear:true,readOnly:true})"/>
+					</span>
+
+                <span id="salesRankingWeekDIV" style="display: none;">
+						<input id="salesRankingSplitMonthStartTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'salesRankingSplitMonthEndTime\')}',isShowClear:true,readOnly:true,dateFmt:'yyyy-MM'});getMonthWeek(this.value,'state',1,'salesRankingSplitWeekStartTime');"/>
+						<input id="salesRankingSplitWeekStartTime"/>-
+						<input id="salesRankingSplitMonthEndTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'salesRankingSplitMonthStartTime\')}',isShowClear:true,readOnly:true,dateFmt:'yyyy-MM'});getMonthWeek(this.value,'end',1,'salesRankingSplitWeekEndTime');"/>
+						<input id="salesRankingSplitWeekEndTime"/>
+					</span>
+
+                <span id="salesRankingMonthDIV" style="display: none;">
+						<input id="salesRankingMonthStartTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'salesRankingMonthEndTime\')}',isShowClear:true,readOnly:true,dateFmt:'yyyy-MM'})"/>-
+						<input id="salesRankingMonthEndTime" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'salesRankingMonthStartTime\')}',isShowClear:true,readOnly:true,dateFmt:'yyyy-MM'})"/>
+					</span>
+
+                <div class="searchPanel" style="margin: 10px 0px;">
+					 <span style="text-align: left;min-width: 150px;">
+						商品搜索：<input class="easyui-textbox" data-options="prompt:'请输入商品名称'" style="width: 150px;"
+                                    name="goodsName" id="goodsName"/>
+					</span>
+                    <span style="margin-left: 10px;">
+                    <input type="button" class="btn btn-success btn-xs" onclick="salesRankingReloadgrid();"
+                           value="查询"/>
+                </span>
+                </div>
+
+            </div>
+            <div class="searchPanel" style="margin-left: 10px;">
+                <input type="button" class="btn btn-primary btn-sm" value="自定义指标"
+                       onclick="showsalesRankingGridColum()"/>
+            </div>
+        </div>
+
+        <div id="salesRankingData" style=" height: 500px;">
+            <table id="salesRankingDataList" toolbar="#salesRankingTB" style=" height: 500px;"></table>
+        </div>
+        <div id="salesRankingWinNorm" style="display: none;">
+            <h4 style="margin-left: 10px;">自定义指标</h4>
+            <div style="margin: 10px 0px 10px 40px;">
+                <a href="#" class="easyui-linkbutton" onclick="salesRankingCheckedSelectDefult();">默认</a>
+                <a href="#" class="easyui-linkbutton" onclick="salesRankingCheckedSelectTrue();" style="margin-left: 10px;">全选</a>
+                <a href="#" class="easyui-linkbutton" onclick="salesRankingCheckedSelectNOT();" style="margin-left: 10px;">反选</a>
+            </div>
+            <table id="salesRankingColumnsDataCheck" style="margin: 0 auto;width: 500px;"></table>
+            <div style="margin-top: 20px;text-align: center; ">
+                <a href="#" class="easyui-linkbutton" onclick="salesRankingMakeGridColum();">确认</a>
+                <a href="#" class="easyui-linkbutton" onclick="salesRankingClosWinButton();" style="margin-left: 20px">取消</a>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<script type="text/javascript" src="../../js/global.js"></script>
+<script type="text/javascript" src="../../js/html/goods/goodsAnalysis.js"></script>
+
+</body>
+</html>

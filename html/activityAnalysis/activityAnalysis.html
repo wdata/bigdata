@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>活动分析</title>
+    <link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../css/global.css">
+    <style type="text/css">
+        body,html{
+            min-width: 1686px;
+        }
+    </style>
+    <script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js"></script>
+
+</head>
+
+<body>
+<div class="container-fluid" style="margin-bottom: 30px">
+    <div class="row">
+        <div class="span6">
+            <ul class="breadcrumb" style="line-height: 2;margin-bottom: 0">
+                <li>
+                    <span>首页</span>
+                </li>
+                <li>活动分析</li>
+            </ul>
+        </div>
+        <div class="hint"></div>
+        <div class="query">
+            <input type="text" class="query_date Wdate" id="stateTime" readonly onfocus="stateTimeInit();"/>
+            <input type="text" class="query_date Wdate" id="endTime" readonly onfocus="endTimeInit();"/>
+            <div class="query_condition" style="margin-right: 0">
+                <i>快速查看：</i>
+                <span class="cliStyle span1">近1天<input type="type="hidden"" value="1"/></span>
+                <span class="span7">近7天<input type="type="hidden"" value="2"/></span>
+                <span class="span30">近30天<input type="type="hidden"" value="3"/></span>
+            </div>
+            <div class="query_time" id="operators_ID">
+                <label>运营商：</label>
+                <select id="operator">
+                </select>
+            </div>
+            <div class="query_time">
+                <label>终端：</label>
+                <select id="terminal">
+                </select>
+            </div>
+            <div class="query_time">
+                <label>活动状态：</label>
+                <select id="activity_state">
+                </select>
+            </div>
+            <div class="query_time">
+                <label>活动名称：</label>
+                <input id="activity_name" type="text" value=""/>
+            </div>
+            <div class="query_time">
+                <button type="button" class="btn btn-primary btn-xs" onclick="activityBtn()" style="margin-left: 20px">查询</button>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="listData" style="background: #fff">
+        <h3>活动监控列表</h3>
+        <div class="features">
+            <input type="button" class="btn btn-primary btn-sm" value="自定义指标" onclick="customizeCommodity.showGridColum()"/>
+            <a class="query_excel" href="javascript:activityExcel()">Excel导出</a>
+        </div>
+        <div class="layer" style="margin: 10px 20px 0px 20px; min-height: 450px;">
+            <div id="dataList"></div>
+        </div>
+        <div id="winNorm">
+            <p class="h4Style" style="margin-left: 10px;">自定义指标</p>
+            <div style="margin: 10px 0px 10px 40px;">
+                <a href="#" class="easyui-linkbutton customizeCommodity" onclick="customizeCommodity.columnsCheckedSelectDefult(); return false;">默认</a>
+                <a href="#" class="easyui-linkbutton" onclick="customizeCommodity.columnsCheckedSelectTrue(); return false;"
+                   style="margin-left: 10px;">全选</a>
+                <a href="#" class="easyui-linkbutton" onclick="customizeCommodity.columnsCheckedSelectNOT(); return false;"
+                   style="margin-left: 10px;">反选</a>
+            </div>
+            <table id="columnsDataCheck" style="margin: 0 auto;width: 500px;"></table>
+            <div style="margin-top: 20px;text-align: center; ">
+                <a href="#" class="easyui-linkbutton customizeCommodity" onclick="customizeCommodity.makeGridColum(); return false;">确认</a>
+                <a href="#" class="easyui-linkbutton" onclick="customizeCommodity.closWinButton(); return false;" style="margin-left: 20px">取消</a>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript" src="../../js/global.js"></script>
+<script type="text/javascript" src="../../js/html/activityAnalysis/activityAnalysis.js"></script>
+
+</body>
+</html>

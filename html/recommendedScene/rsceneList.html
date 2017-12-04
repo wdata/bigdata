@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <title>推荐场景</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/global.css">
+
+    <script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../js/global.js"></script>
+
+</head>
+<body>
+<div class="container-fluid" style="height: 40px;">
+    <div class="row">
+        <div class="span6">
+            <ul class="breadcrumb" style="line-height: 2;">
+                <li>
+                    <span style="font-size: 14px;color: #c2c2c2;">首页</span>
+                </li>
+                <li style="color:#6a7489;font-size: 14px;">推荐场景</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="tb">
+    <!-- 统计维度 -->
+    <div class="searchPanel" style="margin:18px;">
+        <span style="text-align: left;min-width: 150px;">
+            应用：<input style="width: 120px;" name="application" id="iapplication"/>
+        </span>
+        <span>
+            名称：<input class="easyui-textbox" style="width: 120px;" name="sceneName" id="isceneName"/>
+        </span>
+
+        <span id="dayDIV">
+            日期：
+            <input id="startTime" type="text" class="Wdate"
+                   onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')}',isShowClear:true,readOnly:true})"/>-
+            <input id="endTime" type="text" class="Wdate"
+                   onfocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',isShowClear:true,readOnly:true})"/>
+        </span>
+
+    </div>
+    <div style="margin:18px;">
+        <span>
+            接口方法名:
+            <input class="easyui-textbox" style="width: 120px;" name="sceneMethodName" id="isceneMethodName"/>
+
+            <span style="margin-left: 10px;"><input type="button" class="btn btn-success btn-xs" onclick="reloadgrid();"
+                                                    value="查询"/></span>
+        </span>
+    </div>
+
+    <!-- 按钮 -->
+    <div style="margin-left: 10px;">
+        <input type="button" class="btn btn-primary btn-sm" value="增加场景" onclick="toAddPanel()"/>
+    </div>
+
+</div>
+<div style="margin: 6px 20px 0px 20px; height: 500px;">
+    <table id="dataList" toolbar="#tb" style=" height: 500px;"></table>
+</div>
+
+
+<script type="text/javascript" src="../../js/html/recommendedScene/rsceneList.js"></script>
+</body>
+</html>
+<!-- 
+    <div id="win" class="easyui-window" title="查看详情" style="display:none;width:600px;height:400px"   
+        data-options="modal:true">   
+        <div style="margin: 5px">
+            场景名称：看了又看A
+        </div>
+        <div style="margin: 5px">
+            场景应用：乐瑶商城
+        </div>
+        <div style="margin: 5px">
+            场景位置： 商品详情页
+        </div>
+        <div style="margin: 5px">
+            场景描述： APP商品详情页，看了又看
+        </div>
+        <div style="margin: 5px">
+            推荐计算规则： +
+        </div>
+        <div style="margin: 5px">
+            推荐数集： 乐瑶商城:热门商品(20) 看了又看A(15) 客户偏好A(20)
+        </div>
+        <div style="margin: 5px">
+            商品推荐数： 45
+        </div>
+        <div style="margin: 5px">
+            轮播次数： 5次
+        </div>
+        <div style="margin: 5px">
+            API地址： http://XXXXX.leyao.com/12345
+        </div>
+    </div>    -->

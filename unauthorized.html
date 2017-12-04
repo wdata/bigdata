@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <title>错误</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="css/global.css">
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="js/global.js"></script>
+
+    <script>
+        /* function msgTitle() {
+         $.messager.alert('我的消息', ' 您无权限访问本业务系统，请联系管理员进行授权！', 'info', function () {
+         window.location.href = "about:blank";
+
+
+         });
+         }*/
+        //显示空白页
+        function closePage() {
+            window.location.href = "about:blank";
+        }
+
+        //退出当前用户 重新登录
+        function outUser() {
+            window.location.href = serverURL + "/logout";
+        }
+    </script>
+</head>
+<body>
+<div style="width: 400px;height: 100px;margin: 0 auto;margin-top: 50px;text-align: center;border: 1px solid;background-color: beige;padding-top: 50px;">
+    您无权限访问本业务系统，请联系管理员进行授权！<br/>
+    <div style="width: 200px;margin: 0 auto;margin-top: 20px;">
+        <a href="javascript:outUser();">重新登录</a>
+        <a style="margin-left: 50px;" href="javascript:closePage();">关闭</a>
+    </div>
+
+</div>
+
+</body>
+</html>

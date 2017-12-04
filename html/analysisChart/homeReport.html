@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>分析图表</title>
+    <link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/global.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/html/analysisChart/homeReport.css">
+
+    <script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/echarts.3.3.2.js"></script>
+    <!--<script type="text/javascript" src="../../js/echarts.common.min.js"></script>-->
+</head>
+
+<body>
+<div class="container-fluid" style="height: 30px;">
+    <div class="row">
+        <div class="span6">
+            <ul class="breadcrumb" style="line-height: 2">
+                <li>
+                    <span style="font-size: 14px;color: #c2c2c2">首页</span>
+                </li>
+                <li style="color:#6a7489;font-size: 14px;">分析图表</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="echartsPanel">
+    <div>
+        <div class="ecPanelTitle">
+            用户趋势
+            <span id="time_UserTrend" class="subTitle"></span>
+        </div>
+        <div class='searchpPanel'>
+            <span style="margin-right: 30px;" class="supplierShow">
+                        运营商：
+                        <input type="text" id="userTrendSupplierSel"/>
+                    </span>
+        </div>
+        <div class='searchpPanel'>
+            平台：<input style="width: 120px;" id="userTrendPlatform"/>
+            渠道：<input style="width: 120px;" id="userTrendChannel"/>
+            <span class="searchPanel_but">
+					<a href="JavaScript:void(0)" class="userTrend btnActivit"
+                       onclick="getUserTrendChartData('day');convertBtnCss('userTrend',0)">日</a>
+	    			<a href="JavaScript:void(0)" class="userTrend"
+                       onclick="getUserTrendChartData('week');convertBtnCss('userTrend',1)"
+                       style="margin-left: 10px">周</a>
+	    			<a href="JavaScript:void(0)" class="userTrend"
+                       onclick="getUserTrendChartData('month');convertBtnCss('userTrend',2)"
+                       style="margin-left: 10px">月</a>
+				</span>
+        </div>
+
+        <div id="userTrendPanel" style="width: 90%;height:70%; margin: 5px auto;">
+
+        </div>
+    </div>
+    <div>
+        <div class="ecPanelTitle">
+            订单金额趋势
+            <span id="time_OrderAmount" class="subTitle"></span>
+        </div>
+        <div class='searchpPanel'>
+            <span style="margin-right: 30px;" class="supplierShow">
+                        运营商：
+                        <input type="text" id="orderAmountSupplierSel"/>
+                    </span>
+        </div>
+        <div class="searchpPanel">
+            平台：<input style="width: 120px;" id="orderAmountPlatform"/>
+            渠道：<input style="width: 120px;" id="orderAmountChannel"/>
+            <span class="searchPanel_but">
+					<a href="JavaScript:void(0)" class="orderAmount btnActivit"
+                       onclick="getOrderAmountChartData('day');convertBtnCss('orderAmount',0)">日</a>
+	    			<a href="JavaScript:void(0)" class="orderAmount"
+                       onclick="getOrderAmountChartData('week');convertBtnCss('orderAmount',1)"
+                       style="margin-left: 10px">周</a>
+	    			<a href="JavaScript:void(0)" class="orderAmount"
+                       onclick="getOrderAmountChartData('month');convertBtnCss('orderAmount',2)"
+                       style="margin-left: 10px">月</a>
+				</span>
+        </div>
+
+        <div id="orderAmountPanel" style="width: 90%;height:70%; margin: 5px auto;">
+        </div>
+    </div>
+    <div>
+        <div class="ecPanelTitle">
+            商品转化概况
+            <span id="time_GoodsTransform" class="subTitle"></span>
+        </div>
+        <div class='searchpPanel'>
+            <span style="margin-right: 30px;" class="supplierShow">
+                        运营商：
+                        <input type="text" id="goodsTransSupplierSel"/>
+                    </span>
+        </div>
+        <div class="searchpPanel">
+            平台：<input style="width: 120px;" id="goodsTransformPlatform">
+            渠道：<input style="width: 120px;" id="goodsTransformChannel">
+            <span class="searchPanel_but">
+					<a href="JavaScript:void(0)" class="goodsTrans btnActivit"
+                       onclick="getGoodsTransformChartData('yesterday');convertBtnCss('goodsTrans',0)">昨日</a>
+	    			<a href="JavaScript:void(0)" class="goodsTrans"
+                       onclick="getGoodsTransformChartData('toweek');convertBtnCss('goodsTrans',1)"
+                       style="margin-left: 5px">本周</a>
+	    			<a href="JavaScript:void(0)" class="goodsTrans"
+                       onclick="getGoodsTransformChartData('tomonth');convertBtnCss('goodsTrans',2)"
+                       style="margin-left: 5px">本月</a>
+				</span>
+        </div>
+
+        <div id="goodsTransformPanel" style="width: 90%;height:70%; margin: 5px auto;">
+        </div>
+    </div>
+    <div>
+        <div class="ecPanelTitle">
+            商品销售类
+            <span id="time_CommoditySales" class="subTitle"></span>
+        </div>
+        <div class='searchpPanel'>
+            <span style="margin-right: 30px;" class="supplierShow">
+                        运营商：
+                        <input type="text" id="commoditySalesSupplierSel"/>
+                    </span>
+        </div>
+        <div class="searchpPanel">
+            平台：<input style="width: 120px;" id="commoditySalesPlatform">
+            渠道：<input style="width: 120px;" id="commoditySalesChannel">
+            <span class="searchPanel_but">
+					<a href="JavaScript:void(0)" class="commoditySales btnActivit"
+                       onclick="getCommoditySalesChartData('yesterday');convertBtnCss('commoditySales',0)">昨日</a>
+	    			<a href="JavaScript:void(0)" class="commoditySales"
+                       onclick="getCommoditySalesChartData('toweek');convertBtnCss('commoditySales',1)"
+                       style="margin-left: 5px">本周</a>
+	    			<a href="JavaScript:void(0)" class="commoditySales"
+                       onclick="getCommoditySalesChartData('tomonth');convertBtnCss('commoditySales',2)"
+                       style="margin-left: 5px">本月</a>
+				</span>
+        </div>
+
+        <div id="commoditySalesPanel" style="width: 90%;height:70%; margin: 5px auto;">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../js/global.js"></script>
+<script type="text/javascript" src="../../js/echarts/dataCharts.js"></script>
+<script type="text/javascript" src="../../js/html/analysisChart/homeReport.js"></script>
+
+</body>
+</html>

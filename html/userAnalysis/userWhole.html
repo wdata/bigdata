@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <title>用户分析</title>
+    <link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../css/global.css">
+    <script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/echarts.min.js"></script>
+    <script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js"></script>
+    <style type="text/css">
+        #manage_name{  display: flex;  }
+        #manage_name > div:first-child{ width: 72%; }
+        #manage_name > div:last-child{ margin-left: 9% }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+       <!--  <div class="span6">
+            <ul class="breadcrumb" style="line-height: 2;margin-bottom: 0">
+                <li>
+                    <span style="font-size: 14px;color: #c2c2c2">首页</span>
+                </li>
+                <li style="color:#6a7489;font-size: 14px;">用户分析</li>
+            </ul>
+        </div>
+        <div class="hint"></div> -->
+        <div class="query" style="min-width: 1300px;">
+            <input type="text" class="query_date Wdate" id="stateTime" readonly onfocus="stateTimeInit();"/>
+            <input type="text" class="query_date Wdate" id="endTime" readonly onfocus="endTimeInit();"/>
+            <div class="query_condition">
+                <i>快速查看：</i>
+                <span class="cliStyle span1">近1天<input type="hidden" value="1"/></span>
+                <span class="span7">近7天<input type="hidden" value="2"/></span>
+                <span class="span30">近30天<input type="hidden" value="3"/></span>
+            </div>
+            <div class="query_time" id="operators_ID">
+                <label>运营商：</label>
+                <select id="operator">
+                </select>
+            </div>
+            <div class="query_time">
+                <label>终端：</label>
+                <select id="terminal">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div style="background: #fff;min-width: 1300px">
+    <h3>用户概况</h3>
+        <div class="row profile_head userAnalysis" id="manage_name">
+        </div>
+        <div class="overall user_base">
+            <div class="dividing-line right hidden"></div>
+            <div class="database" id="user_base"></div>
+        </div>
+        <div id="analysislist" style="height: 500px; margin: 30px auto;"></div>
+    </div>
+    <div style="background: #fff;margin-top: 45px">
+        <h3>用户画像</h3>
+        <div style="overflow: hidden">
+            <div class="query" style="overflow: hidden;min-width: 1300px;">
+                <div class="query_time">
+                    <label>时间筛选：</label><input id="analysisMonthStartTime" type="text" class="Wdate" onfocus="monthTime();"/>
+                </div>
+                <div class="query_time" id="users_operator">
+                    <label>运营商：</label>
+                    <select id="user_operator">
+                    </select>
+                </div>
+                <div class="query_time">
+                    <label>终端：</label>
+                    <select id="user_terminal">
+                    </select>
+                </div> 
+            </div>
+            <div class="diagram">
+                <p>用户构成</p>
+                <p class="found" style="line-height: 400px;text-align: center">暂无</p>
+                <div id="chart_pie" style="height: 400px">
+                </div>
+            </div>
+            <div class="diagram">
+                <p>新用户比例</p>
+                <p class="found1" style="line-height: 400px;text-align: center">暂无</p>
+                <div id="chart_ratio" style="height: 400px">
+                </div>
+            </div>
+            <div class="diagram">
+                <p>地域分布</p>
+                <p class="found2" style="line-height: 400px;text-align: center">暂无</p>
+                <div id="chart_map" style="height: 400px">
+                </div>
+            </div>
+            <div class="diagram">
+                <p>TOP10地域分布</p>
+                <p class="found3" style="line-height: 400px;text-align: center">暂无</p>
+                <div id="chart_area" style="height: 400px">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="listData" style="background: #fff;margin-top: 45px">
+        <h3>数据详情</h3>
+
+        <div class="features">
+            <input type="button" class="btn btn-primary btn-sm" value="自定义指标" onclick="customizeCommodity.showGridColum()"/>
+            <a class="query_excel" href="javascript:queryExcel()">Excel导出</a>
+        </div>
+
+        <div class="layer"  style="margin: 10px 20px 0px 20px; height: 450px;">
+            <div id="dataList"></div>
+        </div>
+        <div id="winNorm">
+            <p class="h4Style" style="margin-left: 10px;">自定义指标</p>
+            <div style="margin: 10px 0px 10px 40px;">
+                <a href="#" class="easyui-linkbutton customizeCommodity" onclick="customizeCommodity.columnsCheckedSelectDefult(); return false;">默认</a>
+                <a href="#" class="easyui-linkbutton" onclick="customizeCommodity.columnsCheckedSelectTrue(); return false;"
+                   style="margin-left: 10px;">全选</a>
+                <a href="#" class="easyui-linkbutton" onclick="customizeCommodity.columnsCheckedSelectNOT(); return false;"
+                   style="margin-left: 10px;">反选</a>
+            </div>
+            <table id="columnsDataCheck" style="margin: 0 auto;width: 500px;"></table>
+            <div style="margin-top: 20px;text-align: center; ">
+                <a href="#" class="easyui-linkbutton customizeCommodity" onclick="customizeCommodity.makeGridColum(); return false;">确认</a>
+                <a href="#" class="easyui-linkbutton" onclick="customizeCommodity.closWinButton(); return false;" style="margin-left: 20px">取消</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../js/global.js"></script>
+<script type="text/javascript" src="../../js/html/userAnalysis/userWhole.js"></script>
+
+</body>
+</html>

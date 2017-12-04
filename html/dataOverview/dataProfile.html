@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <title>数据概况</title>
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/global.css">
+    <script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js"></script>
+    <style type="text/css">
+        .upColor {
+            font-size: 24px;
+            color: #ffaf68;
+        }
+
+        .downColor {
+            font-size: 24px;
+            color: #4abd7b;
+        }
+
+        .profilePanel {
+            min-width: 1149px;
+            width: 1149px;
+            margin: 0 auto;
+        }
+
+        .profilePanel .countTitle {
+            background-color: #E6E9F1;
+            height: 40px;
+            line-height: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            padding-left: 540px;
+            border-radius: 3px;
+        }
+
+        #lbTime, #iYesterDay {
+            float: right;
+            margin-right: 20px;
+            font-weight: normal;
+            font-size: 12px;
+            color: #8894ab;
+        }
+
+        .profilePanel .searchpPanel {
+            height: 60px;
+            padding: 12px;
+            background-color: #fff;
+        }
+
+        .profilePanel .countItem {
+            border: 1px solid #E6E9F1;
+            background-color: #fff;
+            text-align: center;
+            width: 383px;
+            height: 240px;
+            float: left;
+        }
+
+        .profilePanel .countItem_Title {
+            margin-top: 40px;
+            font-size: 18px;
+            color: #6b7489;
+        }
+
+        .profilePanel .countItem_subTitle {
+            font-size: 14px;
+            color: #8894ab;
+        }
+
+        .profilePanel .countItem_money {
+            font-size: 42px;
+            color: #4f596d;
+        }
+
+        .yCountTitle {
+            clear: both;
+            margin-top: 18px;
+            background-color: #E6E9F1;
+            height: 40px;
+            line-height: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            padding-left: 520px;
+            border-radius: 3px;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+
+        //对数字加分位符
+        function numberFmoney(s) {
+            var n = 3;//将数值按每间隔3 增加','
+            var strS = s + "";
+            var negFlag = strS.indexOf('-');//是否有负号
+            if (negFlag != -1) {
+                strS = strS.substring(1);
+            }
+            var spotIndex = strS.indexOf('.');
+            var setDecimal = "";
+            if (spotIndex != -1) {//是小数时，进行四舍五入，并截取.后数值，用于之后拼接
+                setDecimal = (parseFloat(strS).toFixed(2) + "").substring(spotIndex);
+            }
+            n = n > 0 && n <= 20 ? n : 2;
+            s = parseFloat(strS.replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+            var l = s.split(".")[0].split("").reverse();
+            var r = s.split(".")[1];
+            var t = "";
+            for (var i = 0; i < l.length; i++) {
+                if ((i + 1) % 3 == 0 && (i + 1) != l.length) {
+                    t += l[i] + ",";
+
+                    if (spotIndex != -1) {
+                        spotIndex++;
+                    }
+
+                } else {
+                    t += l[i] + "";
+                }
+            }
+            var outStr = t.split("").reverse().join("") + "." + r;
+
+            if (spotIndex == -1) {//判断是否有小数点，没则截取到小数点之前(取整)，有则截取到小数点后(2位)
+                outStr = outStr.substring(0, outStr.indexOf('.'));
+            } else {
+                outStr = outStr.substring(0, outStr.indexOf('.')) + setDecimal;
+            }
+
+            if (negFlag != -1) {
+                outStr = "-" + outStr;
+            }
+
+            return outStr;
+        }
+
+        //显示数据
+        //valueYesterday 昨日数值，valueTodeay 今日数值，amountRate 百分占比，distanceAmount 差值
+        //inValue 显示今日数值，exValue 显示百分比或者差值，unitStr 需要显示的单位
+        function showData(valueYesterday, valueTodeay, amountRate, distanceAmount, inValue, exValue, unitStr) {
+
+            valueYesterday = valueYesterday == null ? 0 : valueYesterday;
+            valueTodeay = valueTodeay == null ? 0 : valueTodeay;
+            var flagEquality = valueYesterday == valueTodeay ? true : false;//如果值相等，则持平（true）
+
+            if (valueTodeay != 0 && valueYesterday != 0) {
+                $("#" + inValue).text(numberFmoney(valueTodeay) + unitStr);
+
+                if (flagEquality) {
+                    $("#" + exValue).text("持平");
+                } else {
+                    $("#" + exValue).text(filtArrow(amountRate) + "%");
+                }
+                filtClassNam(amountRate, exValue);
+            } else {
+
+                $("#" + inValue).text(numberFmoney(valueTodeay) + unitStr);
+
+                if (flagEquality) {
+                    $("#" + exValue).text("持平");
+                } else {
+                    $("#" + exValue).text(filtArrow(numberFmoney(distanceAmount)) + unitStr);
+                }
+
+                filtClassNam(distanceAmount, exValue);
+            }
+
+        }
+
+        //按条件查询
+        function searchData() {
+
+            var searchPlatformKey = $('#platform').combobox('getValue');
+            var searchChannelKey = $('#channel').combobox('getValue');
+
+            //选择ALL时默认"" 查所有
+            searchPlatformKey = searchPlatformKey == "ALL" ? "" : searchPlatformKey;
+            searchChannelKey = searchChannelKey == "ALL" ? "" : searchChannelKey;
+
+            var supplier;
+            if (null != supplierJID && supplierJID != "") {
+                supplier = supplierJID;
+            } else {
+                supplier = $('#supplierSel').combobox('getValue');
+            }
+
+            var daTime = $('#daTime').val();
+
+            if (null != daTime && daTime == "") {
+                daTime = GetDateStr(-1);
+                $('#daTime').val(daTime);// 控件显示昨日（初始化用）
+            }
+
+            var ajData = {
+                searchSupplierKey: supplier,
+                searchPlatformKey: searchPlatformKey,
+                searchChannelKey: searchChannelKey,
+                searchTime: daTime
+            };
+
+            $.post(serverURL + "/rest/1.0/dataOverview/searchProfileData", ajData, function (dataJson) {
+                if (null != dataJson && !$.isEmptyObject(dataJson) && dataJson.length > 1) {
+                    var commodityMap = dataJson[0];
+                    var userMap = dataJson[1];
+
+                    if (null != commodityMap && !$.isEmptyObject(commodityMap)) {
+
+                        //订单金额
+                        showData(commodityMap.lastOrderAmountSums, commodityMap.orderAmountSums,
+                            commodityMap.orderAmountRate, commodityMap.distanceAmount, "dayInValue1", "exValue1", "元");
+
+                        //订单数
+                        showData(commodityMap.lastOrderCountSums, commodityMap.orderCountSums,
+                            commodityMap.orderCountRate, commodityMap.distanceOrderCount, "dayInValue2", "exValue2", "");
+
+                        //客单价
+                        showData(commodityMap.lastAverageOrderAmount, commodityMap.averageOrderAmount,
+                            commodityMap.averageOrderRate, commodityMap.distanceAverageOrder, "dayInValue3", "exValue3", "元");
+                    }
+
+                    if (null != userMap && !$.isEmptyObject(userMap)) {
+
+                        // 2017-5-24 userMap.newlyAddRegisters 无数据 或 0 时 显示暂无
+                        if (null == userMap.newlyAddRegisters || userMap.newlyAddRegisters == "" || userMap.newlyAddRegisters == 0) {
+                            $("#dayInValue4").text("暂无");
+                            $("#exValue4").text("");
+                        } else {
+                            //新增用户
+                            showData(userMap.lastnewlyRegisters, userMap.newlyAddRegisters,
+                                userMap.registerIntervalRate, userMap.distancenewlyRegisters, "dayInValue4", "exValue4", "");
+                        }
+
+
+                        $("#dayInValue5").text("暂无");
+                        $("#exValue5").text("");
+                        $("#dayInValue6").text("暂无");
+                        $("#exValue6").text("");
+                    }
+                } else {
+                    $("#dayInValue1").text("");
+                    $("#exValue1").text("");
+
+
+                    $("#dayInValue2").text("");
+                    $("#exValue2").text("");
+
+                    $("#dayInValue3").text("");
+                    $("#exValue3").text("");
+
+                    $("#dayInValue4").text("");
+                    $("#exValue4").text("");
+
+                    $("#dayInValue5").text("");
+                    $("#exValue5").text("");
+
+                    $("#dayInValue6").text("");
+                    $("#exValue6").text("");
+                }
+
+                getShowTime();
+                /* if(null!=dataJson[0]&&!$.isEmptyObject(dataJson[0])){
+                 var dataJson[0]
+                 }*/
+            })
+
+        }
+        //过滤显示对应指数的样式
+        function filtClassNam(exponent, allowID) {
+            if (exponent != null) {
+                if (exponent.toString().indexOf('-') == -1) {
+                    $('#' + allowID).removeClass("downColor");
+                    $('#' + allowID).addClass("upColor");
+                } else {
+                    $('#' + allowID).removeClass("upColor");
+                    $('#' + allowID).addClass("downColor");
+                }
+            }
+        }
+
+        //过滤显示对应箭头方向
+        function filtArrow(exponent) {
+            var arrow = "";
+            if (exponent != null) {
+                var strIndex = exponent.toString().indexOf('-');
+                if (strIndex == -1) {
+                    arrow = "↑ " + exponent;
+                } else {
+                    exponent = exponent.toString().substring(strIndex + 1);//去除字符串 “-”
+
+                    arrow = "↓ " + exponent;
+                }
+            }
+            return arrow;
+        }
+
+        function getShowTime() {
+            var daTime = $('#daTime').val();
+            document.getElementById("lbTime").innerText = daTime;
+        }
+
+    </script>
+
+</head>
+<body>
+<div class="container-fluid" style="height: 40px;">
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="span6">
+            <ul class="breadcrumb" style="line-height: 2">
+                <li>
+                    <span style="font-size: 14px;color: #c2c2c2">首页</span>
+                </li>
+                <li style="color:#6a7489;font-size: 14px;">数据概况</li>
+            </ul>
+        </div>
+        <div class="profilePanel">
+            <div class="countTitle">
+                数据概况
+                <span id="lbTime"></span>
+            </div>
+            <div class="searchpPanel">
+                <span style="margin-right: 30px;" class="supplierShow">
+                    运营商：
+                    <input type="text" id="supplierSel"/>
+                </span>
+                平台：<input style="width: 120px;" id="platform"/>
+                渠道：<input style="width: 120px;" id="channel"/>
+                日期：<input id="daTime" type="text" class="Wdate"
+                          onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-{%d-1}'});"/>
+                <input type="button" style="margin-left: 10px;" class="btn btn-success btn-xs" onclick="searchData();"
+                       value="查询"/>
+            </div>
+            <div>
+                <div class="countItem">
+                    <h3 class="countItem_Title">订单金额</h3>
+                    <p class="countItem_subTitle">当前日期累计付款金额</p>
+                    <h2 class="countItem_money" id="dayInValue1"></h2>
+                    <p class="upColor" id="exValue1"></p>
+                </div>
+                <div class="countItem">
+                    <h3 class="countItem_Title">订单数</h3>
+                    <p class="countItem_subTitle">当前日期累计付款下单笔数</p>
+                    <h2 class="countItem_money" id="dayInValue2"></h2>
+                    <p class="upColor" id="exValue2"></p>
+                </div>
+                <div class="countItem">
+                    <h3 class="countItem_Title">客单价</h3>
+                    <p class="countItem_subTitle">客单价=付款金额/付款订单数</p>
+                    <h2 class="countItem_money" id="dayInValue3"></h2>
+                    <p class="upColor" id="exValue3"></p>
+                </div>
+            </div>
+            <div>
+                <div class="countItem">
+                    <h3 class="countItem_Title">新增用户</h3>
+                    <p class="countItem_subTitle">指首次成功注册应用的用户</p>
+                    <h2 class="countItem_money" id="dayInValue4"></h2>
+                    <p class="upColor" id="exValue4"></p>
+                </div>
+                <div class="countItem">
+                    <h3 class="countItem_Title">活跃用户</h3>
+                    <p class="countItem_subTitle">指启动应用的用户，去重</p>
+                    <h2 class="countItem_money" id="dayInValue5"></h2>
+                    <p class="upColor" id="exValue5"></p>
+                </div>
+                <div class="countItem">
+                    <h3 class="countItem_Title">转化率</h3>
+                    <p class="countItem_subTitle">订单转化率=订单数/会话数</p>
+                    <h2 class="countItem_money" id="dayInValue6"></h2>
+                    <p class="upColor" id="exValue6"></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../js/global.js"></script>
+<script type="text/javascript">
+    var supplierJID;//是否运营商
+
+    function supplierFun() {
+
+        supplierJID = window.parent.storeSupplier_ID;//如 运营商管理员选着指定的运营商进行查看
+
+
+        if (isEmpty_var(supplierJID)) {
+            $.get(serverURL + "/rest/1.0/supplierUser/getSupplierId", function (data) {
+                if (null != data && !$.isEmptyObject(data)) {
+                    supplierJID = data.supplierID;
+                }
+
+                if (!isEmpty_var(supplierJID)) {
+                    $('.supplierShow').hide();
+                    $('#supplierSel').combobox('clear');
+                } else {
+                    $('.supplierShow').show();
+                    $.get(serverURL + "/rest/1.0/supplierUser/getSupplierAll", {}, function (data) {
+                        $('#supplierSel').combobox('loadData', data);
+                    }, 'json');
+                }
+            });
+        }
+    }
+
+    function init() {
+        // ----------------获取运营商数据----------------
+        $('#supplierSel').combobox({
+            panelHeight: 100,
+            width: 150,
+            valueField: 'supplier_value',
+            textField: 'supplier_text',
+            editable: false
+
+
+        });
+
+        supplierFun();
+
+        // ----------------获取平台数据----------------
+        $.get(serverURL + '/rest/1.0/dimPlatform/getAllPlatform', {}, function (data) {
+
+            $('#platform').combobox('loadData', data);
+        }, 'json');
+
+        $('#platform').combobox({
+            valueField: 'platformKey',
+            textField: 'platformInterpret',
+            editable: false,
+            onLoadSuccess: function () {
+                //加载完成后，设置选中第一项
+                var platformData = $('#platform').combobox('getData');
+                if (platformData.length > 0) {
+                    $('#platform').combobox('select', platformData[0].platformKey);
+                } else {
+                    $('#platform').combobox('clear');
+                }
+            },
+            onChange: function () {
+                var platformID = $('#platform').combobox('getValue');
+
+                getChannelByParam(platformID);
+
+            }
+        });
+
+        // ----------------获取渠道数据----------------
+        function getChannelByParam(platformKey, outTarget) {
+            var param = {
+                platformKey: platformKey
+            };
+            $.get(serverURL + '/rest/1.0/dimChannel/getPlatformChannel', param, function (data) {
+
+                $('#channel').combobox('loadData', data);
+
+            }, 'json');
+        }
+
+
+        $('#channel').combobox({
+            valueField: 'channelKey',
+            textField: 'channelInterpret',
+            editable: false,
+            onLoadSuccess: function () {
+                //加载完成后，设置选中第一项
+                var channelData = $('#channel').combobox('getData');
+                if (channelData.length > 0) {
+                    $('#channel').combobox('select', channelData[0].channelKey);
+                } else {
+                    $('#channel').combobox('clear');
+
+                }
+            }
+        });
+    }
+
+    $(function () {
+        init();
+        searchData();
+    })
+
+</script>
+
+</body>
+</html>

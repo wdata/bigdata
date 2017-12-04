@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <title>用户视图</title>
+    <link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/global.css">
+    <link rel="stylesheet" type="text/css" href="../../css/html/userAnalysis/userView.css">
+
+    <script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js"></script>
+
+
+</head>
+<body>
+<div style="margin-bottom: 50px;">
+    <div style="margin: 20px 0px 20px 100px">
+        <span style="margin-right: 50px;" id="linkButOne"><a href='#' onclick='changePanelDisplay(false);return false;'>展开检索面板</a></span>
+        <a href='javascript:queryExcel()'>Excel导出</a>
+    </div>
+
+    <!-- 统计维度 -->
+    <div class="searchPanel" style="margin:23px;" id="panelItem">
+        <div class="searchRow">
+            <span class="supplierShow" style="margin-right: 190px;">
+                        运营商：
+                        <input type="text" id="supplierSel"/>
+                    </span>
+            <span>
+                平台：
+                <input type="text" id="platform"/>
+            </span>
+        </div>
+
+        <p class="h4Style">
+            用户属性
+            <a class="clickSwitch" flag="true" outTarget="panel_UserAttribute">展开</a>
+        </p>
+        <div id="panel_UserAttribute">
+            <div class="searchRow">
+                <span>
+                    用户ID：
+                    <input type="text" id="userId">
+                </span>
+                <span style="margin-left: 240px;">
+                    用户名：
+                    <input type="text" id="userName">
+                </span>
+            </div>
+            <div class="searchRow">
+                <span>
+                    姓名：
+                    <input type="text" id="name">
+                </span>
+                <span style="margin-left: 255px;">
+                    手机号：
+                    <input type="text" id="mobile">
+                </span>
+            </div>
+        </div>
+
+        <p class="h4Style">
+            近期行为
+            <a class="clickSwitch" flag="true" outTarget="panel_RecentBehavior">展开</a>
+        </p>
+        <div id="panel_RecentBehavior">
+            <div class="searchRow">
+                <span style="line-height: 26px;">
+                    注册时间：
+                    <span>
+                        <input id="registerDateStart" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'registerDateEnd\')}',isShowClear:true,readOnly:true})"/>-
+                        <input id="registerDateEnd" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'registerDateStart\')}',isShowClear:true,readOnly:true})"/>
+                    </span>
+                </span>
+            </div>
+
+            <div class="searchRow">
+                <span style="line-height: 26px;">
+                    最新一次消费时间：
+                    <span>
+                        <input id="recentPayDateStart" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'recentPayDateEnd\')}',isShowClear:true,readOnly:true})"/>-
+                        <input id="recentPayDateEnd" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'recentPayDateStart\')}',isShowClear:true,readOnly:true})"/>
+                    </span>
+                </span>
+                <span style="line-height: 26px;margin-left: 50px;">
+                    最近一次访问时间：
+                    <span>
+                        <input id="recentVisitDateStart" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'recentVisitDateEnd\')}',isShowClear:true,readOnly:true})"/>-
+                        <input id="recentVisitDateEnd" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'recentVisitDateStart\')}',isShowClear:true,readOnly:true})"/>
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <p class="h4Style">时间维度
+            <span style="font-size: 12px;margin-left: 10px;">（用户消费、用户活跃、售后信息条件在该选择维度下进行搜索）</span>
+        </p>
+        <div class="searchRow">
+            选择
+            <input type="text" id="timeDec" style="width: 100px;"/>
+            <span id="timeDec_spanOne">
+                年月：
+                <input id="timeDec_inputOne" type="text" class="Wdate"
+                       onfocus="WdatePicker({isShowClear:true,readOnly:true,dateFmt:'yyyy-MM'})"/>
+            </span>
+        </div>
+
+        <p class="h4Style">
+            用户消费
+            <a class="clickSwitch" flag="true" outTarget="panel_UserPay">展开</a>
+        </p>
+        <div id="panel_UserPay">
+            <div class="searchRow">
+                <span>
+                    消费金额：
+                    <input id="payAmountMin" type="text"/>-<input id="payAmountMax" type="text"/>
+                </span>
+                <span style="margin-left: 120px;">
+                    消费次数：
+                    <input id="payCountMin" type="text"/>-<input id="payCountMax" type="text"/>
+                </span>
+            </div>
+            <div class="searchRow">
+                <span>
+                    退货次数：
+                    <input id="refundCountMin" type="text"/>-<input id="refundCountMax" type="text"/>
+                </span>
+                <span style="margin-left: 120px;">
+                    购买网销卡次数：
+                    <input id="cardBuyCountMin" type="text"/>-<input id="cardBuyCountMax" type="text"/>
+                </span>
+            </div>
+            <div class="searchRow">
+                <span>
+                    充值金额：
+                    <input id="rechargeAmountMin" type="text"/>-<input id="rechargeAmountMax" type="text"/>
+                </span>
+            </div>
+        </div>
+
+        <p class="h4Style">
+            用户活跃
+
+            <a class="clickSwitch" flag="true" outTarget="panel_Activity">展开</a>
+        </p>
+        <div id="panel_Activity">
+            <div class="searchRow">
+             <span>
+                活跃天数：
+                <input id="activeDaysMin" type="text"/>-<input id="activeDaysMax" type="text"/>
+            </span>
+                <span style="margin-left: 120px;">
+                日均访问时长(分钟)：
+                <input id="dailyVisitMinutesMin" type="text"/>-<input id="dailyVisitMinutesMax" type="text"/>
+            </span>
+            </div>
+            <div class="searchRow">
+            <span>
+                点击商品数：
+                <input id="clickGoodsItemsMin" type="text"/>-<input id="clickGoodsItemsMax" type="text"/>
+            </span>
+                <span style="margin-left: 105px;">
+                点击商品次数：
+                <input id="clickGoodsTimesMin" type="text"/>-<input id="clickGoodsTimesMax" type="text"/>
+            </span>
+            </div>
+            <div class="searchRow">
+            <span>
+                访问页面总数：
+                <input id="pvCountMin" type="text"/>-<input id="pvCountMax" type="text"/>
+            </span>
+                <span style="margin-left: 90px;">
+                分享次数：
+                <input id="shareCountMin" type="text"/>-<input id="shareCountMax" type="text"/>
+            </span>
+            </div>
+
+        </div>
+
+        <p class="h4Style">
+            售后信息
+            <a class="clickSwitch" flag="true" outTarget="panel_AfterSales">展开</a>
+        </p>
+        <div id="panel_AfterSales">
+            <div class="searchRow">
+                <span>
+                    商品评价次数：
+                    <input id="commentCountMin" type="text"/>-<input id="commentCountMax" type="text"/>
+                </span>
+                <span style="margin-left: 93px;">
+                    商品晒图次数：
+                    <input id="showPicCountMin" type="text"/>-<input id="showPicCountMax" type="text"/>
+                </span>
+            </div>
+        </div>
+
+
+        <p class="h4Style">
+            储值用户
+            <a class="clickSwitch" flag="true" outTarget="panel_RechargeType">展开</a>
+        </p>
+        <div id="panel_RechargeType">
+            <div class="searchRow">
+                <span id="rechargeTypeSpan"></span>
+            </div>
+        </div>
+
+        <div>
+            <input type="button" class="btn btn-success btn-xs" style="margin-left: 100px;margin-top: 10px;"
+                   onclick="reloadgrid();" value="搜索"/>
+        </div>
+    </div>
+
+
+    <!-- 按钮组 -->
+    <div style="margin-left: 20px;display: inline-block;">
+        <input type="button" id="buttonOne" class="btn btn-primary btn-sm" value="自定义指标" onclick="showGridColum()"/>
+    </div>
+
+
+    <div class="layer"  style="margin: 10px 20px 0px 20px; height: 450px;">
+        <div id="dataList"></div>
+    </div>
+</div>
+
+<div id="winNorm">
+    <p class="h4Style" style="margin-left: 10px;">自定义指标</p>
+    <div style="margin: 10px 0px 10px 40px;">
+        <a href="#" class="easyui-linkbutton" onclick="columnsCheckedSelectDefult(); return false;">默认</a>
+        <a href="#" class="easyui-linkbutton" onclick="columnsCheckedSelectTrue(); return false;"
+           style="margin-left: 10px;">全选</a>
+        <a href="#" class="easyui-linkbutton" onclick="columnsCheckedSelectNOT(); return false;"
+           style="margin-left: 10px;">反选</a>
+    </div>
+    <table id="columnsDataCheck" style="margin: 0 auto;width: 500px;"></table>
+    <div style="margin-top: 20px;text-align: center; ">
+        <a href="#" class="easyui-linkbutton" onclick="makeGridColum(); return false;">确认</a>
+        <a href="#" class="easyui-linkbutton" onclick="closWinButton(); return false;" style="margin-left: 20px">取消</a>
+    </div>
+</div>
+
+
+<div id="panel_singleUserInformation" style="display: none;">
+    <h3 class="titleConter">基本信息</h3>
+    <div>
+        <div style="margin: 0px 10px 0px 75px; display: inline-block;">
+            <img src="" id="headPortrait" width="80" height="80"/>
+        </div>
+        <div style="display: inline-block;width: 700px;min-width: 700px;">
+            <ul class="userBasicInfoList">
+                <li class="columnhead">ID</li>
+                <li class="columnhead">用户名</li>
+                <li class="columnhead">姓名</li>
+                <li class="columnhead">手机号码</li>
+                <li class="columnhead">性别</li>
+                <li class="columnhead">年龄</li>
+                <li class="columnhead">省份</li>
+
+                <li class="showText" id="basicInformation_id"></li>
+                <li class="showText" id="basicInformation_userName"></li>
+                <li class="showText" id="basicInformation_name"></li>
+                <li class="showText" id="basicInformation_mobile"></li>
+                <li class="showText" id="basicInformation_sex"></li>
+                <li class="showText" id="basicInformation_age"></li>
+                <li class="showText" id="basicInformation_province"></li>
+            </ul>
+        </div>
+    </div>
+
+    <h3 class="titleConter">价值信息</h3>
+    <div>
+        <h4>消费金额趋势</h4>
+        <div id="comsumptionPanel" style="width: 600px;height:210px; margin-left:200px;">
+            <!--指标1-所有用户平均Arpu：当月总付款订单金额/付款用户数
+            指标2-该用户月消费金额：当月该用户付款订单金额-->
+        </div>
+        <div>
+            <h4>购买次数趋势</h4>
+            <div id="buyCountPanel" style="width: 600px;height:210px; margin-left:200px;">
+                <!--指标1-所有用户平均购买次数：当月总付款订单数/付款用户数
+                指标2-该客户当月购买次数：当月该用户付款订单数-->
+
+            </div>
+            <h3 class="titleConter">偏好信息</h3>
+            <div style="width: 700px;min-width: 700px; margin-left: 100px;">
+                <ul class="list2" style="height: 100px;">
+                    <li>最喜爱的类别:<span id="preferenceInformation_favClassify"></span></li>
+                    <li>最喜爱的订单价格段:<span id="preferenceInformation_favOrderPriceRange"></span></li>
+                    <li>最喜爱单品价格段:<span id="preferenceInformation_favGoodsPriceRange"></span></li>
+                    <li>最喜爱的时段:<span id="preferenceInformation_favTimeRange"></span></li>
+                </ul>
+            </div>
+            <h3 class="titleConter">活跃信息</h3>
+            <div style="width: 700px;min-width: 700px; margin-left: 100px;">
+                <ul class="list1">
+                    <li>最近一次购买距今天数：<span id="activitInformation_recentBuyPastDays"></span></li>
+                    <li>最近一次访问距今天数：<span id="activitInformation_recentVisitPastDays"></span></li>
+                    <li>月活跃天数：<span id="activitInformation_monthActiveDays"></span></li>
+                    <li>月访问次数：<span id="activitInformation_monthVisitCount"></span></li>
+                    <li>注册时长：<span id="activitInformation_registerPastTime"></span></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</div>
+
+<script type="text/javascript" src="../../js/global.js"></script>
+<!--<script type="text/javascript" src="../../js/echarts.3.3.2.js"></script>-->
+<script type="text/javascript" src="../../js/echarts.common.min.js"></script>
+<script type="text/javascript" src="../../js/html/userAnalysis/userViewEcharts.js"></script>
+<script type="text/javascript" src="../../js/html/userAnalysis/userView.js"></script>
+</body>
+</html>

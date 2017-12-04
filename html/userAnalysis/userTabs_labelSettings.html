@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <title>用户标签设置</title>
+    <link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/global.css">
+    <link rel="stylesheet" href="../../../css/html/userAnalysis/userTabs_labelSettings.css">
+
+    <script type="text/javascript" src="../../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../../easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../../js/My97DatePicker/WdatePicker.js"></script>
+
+</head>
+<body>
+<div style="margin-bottom: 50px;">
+
+    <div style="margin: 20px 0px 20px 100px">
+        <span style="margin-right: 50px;" id="linkButOne"></span>
+
+        <a href="javascript:touserTabsPage()">返回用户标签页面</a>
+
+        <span style="margin-left: 50px;" id="excelButOne"></span>
+
+    </div>
+
+    <!-- 统计维度 -->
+    <div class="searchPanel" style="margin:23px;" id="panelItem">
+        <div style="margin-top: 10px;margin-left: 20px;">
+            <span style="width: 300px;display: inline-block; ">
+                运营商：<span id="supplierText" class="showFontStyle"></span>
+            </span>
+            <span style="margin-left: 100px;">
+                当前标签：<span id="defultLabelText" class="showFontStyle"></span>
+            </span>
+        </div>
+
+        <h4>
+            用户属性
+            <a class="clickSwitch" flag="true" outTarget="panel_UserAttribute">展开</a>
+        </h4>
+        <div id="panel_UserAttribute">
+            <div class="searchRow">
+                <span>
+                    平台：
+                    <input type="text" id="platform" style="width: 100px;"/>
+                </span>
+                <span style="line-height: 26px;margin-left: 255px;">
+                    注册时间：
+                    <span>
+                        <input id="registerDateStart" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'registerDateEnd\')}',isShowClear:true,readOnly:true})"/>-
+                        <input id="registerDateEnd" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'registerDateStart\')}',isShowClear:true,readOnly:true})"/>
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <h4>
+            近期行为
+            <a class="clickSwitch" flag="true" outTarget="panel_RecentBehavior">展开</a>
+        </h4>
+        <div id="panel_RecentBehavior">
+            <div class="searchRow">
+                <span style="line-height: 26px;">
+                    最新一次消费时间：
+                    <span>
+                        <input id="recentPayDateStart" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'recentPayDateEnd\')}',isShowClear:true,readOnly:true})"/>-
+                        <input id="recentPayDateEnd" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'recentPayDateStart\')}',isShowClear:true,readOnly:true})"/>
+                    </span>
+                </span>
+                <span style="line-height: 26px;margin-left: 50px;">
+                    最近一次访问时间：
+                    <span>
+                        <input id="recentVisitDateStart" type="text" class="Wdate"
+                               onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'recentVisitDateEnd\')}',isShowClear:true,readOnly:true})"/>-
+                        <input id="recentVisitDateEnd" type="text" class="Wdate"
+                               onfocus="WdatePicker({minDate:'#F{$dp.$D(\'recentVisitDateStart\')}',isShowClear:true,readOnly:true})"/>
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <h4>时间维度
+            <span style="font-size: 12px;margin-left: 10px;">（用户消费、用户活跃、售后信息条件在该选择维度下进行搜索）</span>
+        </h4>
+        <div class="searchRow">
+            选择
+            <input type="text" id="timeDec" style="width: 100px;"/>
+            <span id="timeDec_spanOne">
+                年月：
+                <input id="timeDec_inputOne" type="text" class="Wdate"
+                       onfocus="WdatePicker({isShowClear:true,readOnly:true,dateFmt:'yyyy-MM'})"/>
+            </span>
+        </div>
+
+        <h4>
+            用户消费
+            <a class="clickSwitch" flag="true" outTarget="panel_UserPay">展开</a>
+        </h4>
+        <div id="panel_UserPay">
+            <div class="searchRow">
+                <span>
+                    消费金额：
+                    <input id="payAmountMin" type="text"/>-<input id="payAmountMax" type="text"/>
+                </span>
+                <span style="margin-left: 120px;">
+                    消费次数：
+                    <input id="payCountMin" type="text"/>-<input id="payCountMax" type="text"/>
+                </span>
+            </div>
+            <div class="searchRow">
+                <span>
+                    退货次数：
+                    <input id="refundCountMin" type="text"/>-<input id="refundCountMax" type="text"/>
+                </span>
+                <span style="margin-left: 120px;">
+                    购买网销卡次数：
+                    <input id="cardBuyCountMin" type="text"/>-<input id="cardBuyCountMax" type="text"/>
+                </span>
+            </div>
+            <div class="searchRow">
+                <span>
+                    充值金额：
+                    <input id="rechargeAmountMin" type="text"/>-<input id="rechargeAmountMax" type="text"/>
+                </span>
+            </div>
+        </div>
+
+        <h4>
+            用户活跃
+            <a class="clickSwitch" flag="true" outTarget="panel_Activity">展开</a>
+        </h4>
+        <div id="panel_Activity">
+            <div class="searchRow">
+                 <span>
+                    活跃天数：
+                    <input id="activeDaysMin" type="text"/>-<input id="activeDaysMax" type="text"/>
+                </span>
+                <span style="margin-left: 120px;">
+                    日均访问时长(分钟)：
+                    <input id="dailyVisitHoursMin" type="text"/>-<input id="dailyVisitHoursMax" type="text"/>
+                </span>
+            </div>
+            <div class="searchRow">
+                <span>
+                    点击商品数：
+                    <input id="clickGoodsItemsMin" type="text"/>-<input id="clickGoodsItemsMax" type="text"/>
+                </span>
+                <span style="margin-left: 105px;">
+                    点击商品次数：
+                    <input id="clickGoodsTimesMin" type="text"/>-<input id="clickGoodsTimesMax" type="text"/>
+                </span>
+            </div>
+            <div class="searchRow">
+                <span>
+                    访问页面总数：
+                    <input id="pvCountMin" type="text"/>-<input id="pvCountMax" type="text"/>
+                </span>
+                <span style="margin-left: 90px;">
+                    分享次数：
+                    <input id="shareCountMin" type="text"/>-<input id="shareCountMax" type="text"/>
+                </span>
+            </div>
+        </div>
+
+        <h4>
+            售后信息
+            <a class="clickSwitch" flag="true" outTarget="panel_AfterSales">展开</a>
+        </h4>
+        <div id="panel_AfterSales">
+            <div class="searchRow">
+                <span>
+                    商品评价次数：
+                    <input id="commentCountMin" type="text"/>-<input id="commentCountMax" type="text"/>
+                </span>
+                <span style="margin-left: 93px;">
+                    商品晒图次数：
+                    <input id="showPicCountMin" type="text"/>-<input id="showPicCountMax" type="text"/>
+                </span>
+            </div>
+        </div>
+
+        <h4>储值用户
+            <a class="clickSwitch" flag="true" outTarget="panel_RechargeType">展开</a>
+        </h4>
+        <div id="panel_RechargeType">
+            <div class="searchRow">
+                <span id="rechargeTypeSpan"></span>
+            </div>
+        </div>
+
+        <div class="searchRow" style="margin-top: 20px;">
+            是否查询当前标签用户:
+            <label><input type="radio" name="queryLabelUser" value="1" checked="checked"/>是</label>
+            <label><input type="radio" name="queryLabelUser" value="0"/>否</label>
+
+            <input type="button" class="btn btn-success btn-xs" style="margin-left: 10px;"
+                   onclick="commodity();" value="搜索"/>
+        </div>
+    </div>
+
+    <div style="margin: 20px;" class="customFlag">
+        <button style="margin-right:20px;" onclick="checkedSelectTrue()">全选</button>
+        <button style="margin-right:20px;" onclick="checkedSelectFalse()">取消</button>
+        <button style="margin-right:20px;" onclick="batchAddByID()">批量添加</button>
+        <button style="margin-right:20px;" onclick="batchDelByID()">批量移除</button>
+    </div>
+
+    <!-- 按钮组 -->
+    <div style="margin: 20px;">
+        <input type="button" id="buttonOne" class="btn btn-primary btn-sm" value="自定义指标" onclick="showGridColum()"/>
+    </div>
+
+
+    <div style="margin: 10px 20px 0px 20px; height: 450px;">
+        <table id="dataList" style=" height: 450px;"></table>
+    </div>
+</div>
+
+<div id="winNorm">
+    <h4 style="margin-left: 10px;">自定义指标</h4>
+    <div style="margin: 10px 0px 10px 40px;">
+        <a href="#" class="easyui-linkbutton" onclick="columnsCheckedSelectDefult(); return false;">默认</a>
+        <a href="#" class="easyui-linkbutton" onclick="columnsCheckedSelectTrue(); return false;"
+           style="margin-left: 10px;">全选</a>
+        <a href="#" class="easyui-linkbutton" onclick="columnsCheckedSelectNOT(); return false;"
+           style="margin-left: 10px;">反选</a>
+    </div>
+    <table id="columnsDataCheck" style="margin: 0 auto;width: 500px;"></table>
+    <div style="margin-top: 20px;text-align: center; ">
+        <a href="#" class="easyui-linkbutton" onclick="makeGridColum(); return false;">确认</a>
+        <a href="#" class="easyui-linkbutton" onclick="closWinButton(); return false;" style="margin-left: 20px">取消</a>
+    </div>
+</div>
+<script type="text/javascript" src="../../../js/global.js"></script>
+<script type="text/javascript" src="../../../js/html/userAnalysis/userTabs_labelSettings.js"></script>
+
+</body>
+</html>

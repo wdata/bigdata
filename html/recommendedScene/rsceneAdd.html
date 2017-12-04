@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <title>新增场景</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/global.css">
+
+    <script type="text/javascript" src="../../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../../easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../../bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../js/global.js"></script>
+
+    <script type="text/javascript" src="../../../js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="../../../js/jquery.ztree.excheck.js"></script>
+    <link rel="stylesheet" href="../../../css/zTreeStyle/zTreeDemo.css" type="text/css">
+    <link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <style type="text/css">
+        .textboxStyle {
+            padding: 200px;
+        }
+
+        .formDiv {
+            margin: 10px 0px;
+        }
+
+        #icustomer {
+            margin: 0 auto;
+        }
+
+        #icustomer td > input[type="checkbox"] {
+            vertical-align: bottom;
+        }
+
+        #icustomer td {
+            width: 140px;
+            padding: 5px;
+        }
+
+        .class_inlineblock {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div class="easyui-layout" data-options="fit:true">
+    <div id="panelTags" style="margin: 0 auto">
+        <div title="场景描述" style="padding:50px;display:none; text-align: center">
+
+            <div class="formDiv">
+                <label for="isceneApp">生效的终端类型<span style="color: red;">*</span></label>
+                <input class="textboxStyle" id="isceneApp" style="width: 367px;"/>
+            </div>
+            <div class="formDiv" id="dSceneName">
+                场景名称<span style="color: red;">*</span>
+                <input type="text" class="textboxStyle" tabindex=-1 name="sceneName" id="isceneName"/>
+            </div>
+            <div class="formDiv" id="dSceneMethodName">
+                接口名称<span style="color: red;">*</span>
+                <input type="text" class="textboxStyle" tabindex=-1 name="sceneName" id="isceneMethodName"/>
+            </div>
+            <div class="formDiv">
+                <label for="iscenePosition">场景位置<span style="color: red;">*</span></label>
+                <input type="text" class="easyui-textbox textboxStyle" id="iscenePosition"/>
+            </div>
+            <div class="formDiv">
+                <label for="isceneDescribe">场景描述<span style="color: red;">*</span></label>
+                <input type="text" class="easyui-textbox textboxStyle" id="isceneDescribe"/>
+            </div>
+            <div class="formDiv">
+                <a href="#" class="easyui-linkbutton" onclick="obj.nextStep('describe');"
+                   style="width: 100px;margin: 20px 0px;" data-options="size:'large'">下一步</a>
+            </div>
+        </div>
+        <div title="客户群选择" style="padding:50px;text-align: center">
+            <div class="customerClas">
+                <table id="icustomer"></table>
+            </div>
+
+            <div class="formDiv" style="text-align: center">
+                <a href="#" class="easyui-linkbutton" onclick="obj.upStep('customer');"
+                   style="width: 100px;margin-right: 20px;" data-options="size:'large'" >上一步</a>
+                <a href="#" class="easyui-linkbutton" onclick="obj.nextStep('customer');"
+                   style="width: 100px;margin: 20px 0px;" data-options="size:'large'">下一步</a>
+            </div>
+        </div>
+        <div title="数据集选择" style="padding:0px 50px;display:none;">
+            <div class="zTreeDemoBackground class_inlineblock">
+                <h2>选择结果集</h2>
+                <ul id="treeDemo" class="ztree"></ul>
+            </div>
+            <div class="class_inlineblock" style="height:250px;margin: 100px 50px;vertical-align: top;">
+                <h4>选择结果集计算规则</h4>
+                <div style="margin-bottom: 50px">
+                    <input class="easyui-combobox" style="width: 100px" id="icalculationRules"/>
+                </div>
+                <h4>结果数</h4>
+                <div>
+                    <input type="text" class="easyui-textbox" style="width: 100px" id="iresultNumber"/>
+                </div>
+            </div>
+            <div class="class_inlineblock" style="height:250px;margin: 10px 0px 100px 0px;vertical-align: top;">
+                <table id="rulesTableOne" style="display: none; width: 400px; text-align: center; max-width: 400px">
+                    <tr>
+                        <td style="background-color: #1B85D7;color: #ffffcc">数据集</td>
+                        <td style="background-color: #1B85D7;color: #ffffcc">推荐数</td>
+                    </tr>
+                </table>
+                <table id="rulesTableTwo" style="display: none; width: 400px; text-align: center; max-width: 400px">
+                    <tr>
+                        <td style="background-color: #1B85D7;color: #ffffcc">数据集</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="formDiv" style="text-align: center; float: none">
+                <a href="#" class="easyui-linkbutton" onclick="obj.upStep('dataSet');"
+                   style="width: 100px;margin-right: 20px;" data-options="size:'large'" >上一步</a>
+                <a href="#" class="easyui-linkbutton" onclick="obj.nextStep('dataSet');"
+                   style="width: 100px;margin: 20px 0px;" data-options="size:'large'">下一步</a>
+            </div>
+        </div>
+        <div title="轮播规则" style="padding:50px;display:none; text-align: center;">
+            <div>
+                <label for="isceneApp">轮播规则<span style="color: red;">*</span></label>
+                <input class="easyui-combobox textboxStyle" id="icarouselRules"/>
+            </div>
+            <div class="formDiv" style="text-align: center">
+                <a href="#" class="easyui-linkbutton" onclick="obj.upStep('carousel');"
+                   style="width: 100px;margin-right: 20px;" data-options="size:'large'" >上一步</a>
+                <a href="#" class="easyui-linkbutton" onclick="obj.nextStep('carousel');"
+                   style="width: 100px;margin: 20px 0px;" data-options="size:'large'">下一步</a>
+            </div>
+        </div>
+        <div title="生成API" style="padding:50px;display:none;">
+            <div class="formDiv" style="text-align: center">
+                <a href="#" class="easyui-linkbutton" onclick="obj.upStep('getAPI');"
+                   style="width: 100px;margin-right: 20px;" data-options="size:'large'" >上一步</a>
+                <a href="#" class="easyui-linkbutton" onclick="obj.nextStep('getAPI');"
+                   style="width: 100px;margin: 20px 0px;" data-options="size:'large'">生成API</a>
+            </div>
+            <div id="win_api" style="width:700px;height:400px;">
+                <div style="margin: 5px;">
+                    接口：<span id="apiURL"></span>
+                </div>
+                <div style="margin: 5px;">
+                    请求方式：<span id="apiMethod"></span>
+                </div>
+                <div style="margin: 5px;">
+                    数据头：<span id="apiHeader"></span>
+                </div>
+                <div style="margin: 5px;">
+                    接口名称：<span id="apiMethodName"></span>
+                </div>
+                <div style="margin: 5px;">
+                    <h3>参数列表</h3>
+                    <table class="table" id="paramTable" style="width: 600px"></table>
+                </div>
+                <div style="margin: 5px;">
+                    描述：<span id="apiDescription"></span>
+                </div>
+                <div style="margin: 5px;">
+                    请求实例：<span id="apiRequestEg"></span>
+                </div>
+                <div style="margin: 5px;">
+                    成功实例：<span id="apiSuccessEg"></span>
+                </div>
+                <div style="margin: 5px;">
+                    失败实例：<span id="apiFailEg"></span>
+                </div>
+                <div style="margin: 5px;">
+                    <h3>结果集状态码</h3>
+                    <table class="table" id="resultCodeTable" style="width: 600px"></table>
+                </div>
+                <div style="margin: 10px 0px 10px 100px;">
+                    <input type="button" value='返回到查询列表' onclick="obj.toRsceneListPage()"
+                           class="btn btn-primary btn-lg "/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../../js/html/recommendedScene/rsceneAdd.js"></script>
+
+</body>
+</html>
